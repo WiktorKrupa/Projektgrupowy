@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="test3.css" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tabelka</title>
+    </head>
+    <body>
+        <!-- Na początku strony znajduje się tekst, wyświetlający się dotąd, aż tabelka się załaduje, w tym przypadku jest to "Loading...", tego nie musi byc, ale fajnie dziala -->
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" 
+                 role="status" id="loading">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <h1>Zarejestrowane samochody</h1>
+        <!-- Pod h1, wyświetli się tabelka z danymi -->
+        <table id="cars"></table>
+    </body>
+    <script>
+        const api_url = "https://my.api.mockaroo.com/cars.json?key=f34a0680";
+  
+// Celem funkcji async/await jest uproszczenie działania używając obietnic (promises) synchronicznie oraz by wykonać pewne działania w grupie Promises. Tutaj opisujemy jak funkcja async bedzie dzialac
+
+async function getapi(url) {
+    
+    // Storing response - Funkcja async może zawierać wyrażenie await (en-US), które wstrzymuje wywołanie funkcji asynchronicznej i czeka na przekazaną deklarację Promisei wtedy wznawia wywołanie funkcji async oraz interpretuje jako wartość rozwiązaną.
+    // Pamiętaj, że polecenie await działa wyłącznie wewnątrz funkcji async. Jeśli użyjesz go poza ciałem funkcji async otrzymasz SyntaxError. 
+    // fetch(url) sprawia, że nasze api ładuje się do zmiennej api_url
+
+    const response = await fetch(url);
+    
+    // Storing data in form of JSON - tutaj ładujemy dane (var data), data ładujemy to konsoli, a potem wykonuje się warunek i jeśli jest wszystko okej (czyli nie ma zadnych błedów - response powinien byc chyba wtedy true), wtedy "Loading..." bar nam się chowa,(czyli funkcja hideLoader() się urochamia), a następnie urochamia się funkcja show(data), ktorej dzialanie opisalam ponizej
+
+    var data = await response.json();
+    console.log(data);
+    if (response) {
+        hideloader();
+    }
+    show(data);
+}
+
+// Calling that async function - wywołuję funckję async, którą opisałam wyżej
+getapi(api_url);
+  
+// Function to hide the loader - tutaj została stworzona funkcja, ktora jest odpowiedzialna za schowanie tego "Loading" Bar, gdy wszystko nam się ładnie załaduje
+function hideloader() {
+    document.getElementById('loading').style.display = 'none';
+}
+// Function to define innerHTML for HTML table - tutaj jest opisana funkcja, która tworzy nam tabelkę, na początku tworzy nam pierwszy wiersz z opisanymi danymi, jakie będą występować w tabelce, czyli model itd, a jesli chodzi o let tab to tworzymy jakgdyby tekst ktory potem umieszczamy w html, i te wszystkie <tr> i <th> interpretuje nie jako czysty tekst, tylko jak prawdziwy html, a dane w srodu są git
+function show(data) {
+    let tab = 
+        `<tr>
+          <th>Marka</th>
+          <th>Model</th>
+          <th>Liczba właścicieli</th>
+          <th>Numer VIN</th>
+          <th>Wypadek</th>
+         </tr>`;
+    
+    // Loop to access all rows - tutaj tworzymy for loop, ktory nasze dane z api, bedzie umieszczał nam wybrane dane w tabelce
+    for (let r of data) {
+        tab += `<tr> 
+    <td>${r.car_make} </td>
+    <td>${r.car_model}</td>
+    <td>${r.car_number_of_owners}</td>
+    <td>${r.car_vin}</td> 
+    <td>${r.car_accident}</td>          
+</tr>`;
+    }
+    // Setting innerHTML as tab variable - tu w sumie nie wiem o co chodzi, ale to chyba wywołuje to, że nam się ta tabelka wykonuje, jak jest na samym początku w html <table id="cars"> to jak jest to cars to tam sie pojawia ten tab, czyli to co funkcja show(data) zrobiła 
+    document.getElementById("cars").innerHTML = tab;
+}
+    </script>
+    <!-- i to chyba tyle jesli chodzi o caly html
+    jedynie jak jest css to ja to skopiowałam skądś i pozmieniałam tam, żeby nam to ładnie działało, a kolorki się już dostosuje do naszych potrzeb -->
+</html>
+
