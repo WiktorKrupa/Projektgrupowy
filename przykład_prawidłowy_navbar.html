@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: #f7eef7;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #221122;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #d5aad5;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #a752a7;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin_left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<!-- w style musi być dodana część main-->
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="o_nas.html">Amelka</a>
+        <a href="#">Malwina</a>
+        <a href="#">Czad Wiktor</a>
+        <a href="indeks_2.html">Wykres 1</a>
+        <a href="indeks_3(poprawiony_navbar).html">Wykres 44</a>
+    </div>
+    <div id="main">
+       <!--Tutaj musi znajdować się cała zawartość prograu, wszystko co ma być przesunięte-->
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            //dodane poniższe dwie linijki
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            //do tego momentu
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            //dodane poniższe dwie linijki
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+            //do tego momentu
+        }
+    </script>
+
+
+</body>
+
+
+
+
+</html>
