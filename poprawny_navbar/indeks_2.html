@@ -1,0 +1,266 @@
+<html>
+
+<head>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: #f7eef7;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #221122;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #d5aad5;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #a752a7;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin_left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="o_nas.html">Amelka</a>
+        <a href="#">Malwina</a>
+        <a href="#">Czad Wiktor</a>
+        <a href="indeks_2.html">Wykres 1</a>
+        <a href="indeks_3(poprawiony_navbar).html">Wykres 44</a>
+    </div>
+    <div id="main">
+        <h1>Auta</h1>
+        <span style="font-size:30px;cursor:pointer;color:#a752a7" onclick="openNav()">&#9776; Kliknij tutaj</span>
+        <div class="main-page">
+            <center>
+                <div class="chart" style="height: 600px; width: 600px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </center>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="scripts/pieChart.js"></script>
+        <script>
+
+            let colorsMapping = new Map([
+                ['red', '#ff4f4f'],
+                ['black', '#171717'],
+                ['blue', '#6cbae0'],
+                ['grey', '#878787'],
+                ['green', '#b0de9f'],
+                ['yellow', '#f5ed99'],
+                ['pink', '#ddb5cb'],
+                ['gold', '#8d794e'],
+                ['silver', '#d9d9d9'],
+
+            ])
+
+            let borderMapping = new Map([
+                ['red', '#dd4343'],
+                ['black', '#000000'],
+                ['blue', '#509fc6'],
+                ['grey', '#757575'],
+                ['green', '#a3c996'],
+                ['yellow', '#e1d97f'],
+                ['pink', '#cd9db8'],
+                ['gold', '#826d42'],
+                ['silver', '#c3c3c3'],
+                ['white', '#e1e1e1']
+
+            ])
+
+            let color_array = [];
+
+            function getFromMapOrDeflaut(map, key) {
+                return map.has(key) ? map.get(key) : key
+            }
+
+
+            async function checkColors() {
+                var apiUrl = "https://my.api.mockaroo.com/auta.json?key=0d779220";
+                return fetch(apiUrl).then(response => {
+                    return response.json();
+                }).then(jsondata => {
+                    console.log(jsondata)
+                    jsondata.map(item => {
+                        color_array.push(item.color)
+                    })
+                    console.log(color_array, 999)
+
+                    let unique_colors = []
+                    let col_count = []
+
+                    color_array.map(item1 => {
+                        if (!unique_colors.includes(item1)) {
+                            unique_colors.push(item1)
+
+                            count = 0
+                            color_array.map(item2 => {
+
+                                if (item1 == item2) {
+                                    count += 1
+                                }
+                            })
+                            col_count.push(count)
+                        }
+
+                    })
+
+
+                    console.log(unique_colors, 998)
+                    console.log(col_count, 999)
+
+                    var next = true;
+
+                    while (next) {
+                        var skip = true;
+                        for (var i = 0; i < col_count.length; i++) {
+                            if (col_count[i] < col_count[i + 1]) {
+                                temp = col_count[i]
+                                col_count[i] = col_count[i + 1]
+                                col_count[i + 1] = temp
+
+                                temp = unique_colors[i]
+                                unique_colors[i] = unique_colors[i + 1]
+                                unique_colors[i + 1] = temp
+                                skip = false;
+                            }
+                        }
+
+                        if (skip) {
+                            next = false;
+                        }
+
+                    }
+
+                    console.log(col_count, 998)
+                    console.log(unique_colors, 998)
+
+                    const data = {
+                        labels: unique_colors,
+                        datasets: [{
+                            label: '# of Votes',
+                            data: col_count,
+                            backgroundColor: [
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[0]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[1]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[2]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[3]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[4]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[5]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[6]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[7]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[8]),
+                                getFromMapOrDeflaut(colorsMapping, unique_colors[9]),
+
+                                // map1.has(unique_colors[0]) ? map1.get(unique_colors[0]) : unique_colors[0],
+                                // map1.has(unique_colors[1]) ? map1.get(unique_colors[1]) : unique_colors[1],
+                                // map1.has(unique_colors[2]) ? map1.get(unique_colors[2]) : unique_colors[2],
+                                // map1.has(unique_colors[3]) ? map1.get(unique_colors[3]) : unique_colors[3],
+                                // map1.has(unique_colors[4]) ? map1.get(unique_colors[4]) : unique_colors[4],
+                                // map1.has(unique_colors[5]) ? map1.get(unique_colors[5]) : unique_colors[5],
+                                // map1.has(unique_colors[6]) ? map1.get(unique_colors[6]) : unique_colors[6],
+                                // map1.has(unique_colors[7]) ? map1.get(unique_colors[7]) : unique_colors[7],
+                                // map1.has(unique_colors[8]) ? map1.get(unique_colors[8]) : unique_colors[8],
+                                // map1.has(unique_colors[9]) ? map1.get(unique_colors[9]) : unique_colors[9],
+
+                            ],
+                            borderColor: [
+                                getFromMapOrDeflaut(borderMapping, unique_colors[0]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[1]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[2]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[3]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[4]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[5]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[6]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[7]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[8]),
+                                getFromMapOrDeflaut(borderMapping, unique_colors[9]),
+
+                            ],
+                            borderWidth: 2
+                        }]
+                    }
+
+                    const config3 = {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                            scales: {
+                            }
+                        }
+                    }
+
+                    const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), config3)
+
+                    return pieChart
+
+                }).catch(err => {
+                    // Do something for an error here
+                });
+            }
+
+            const pieChart = checkColors()
+        </script>
+    
+    </div>
+
+        <script>
+                    function openNav() {
+                        document.getElementById("mySidenav").style.width = "250px";
+                    document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "#f7eef7";        }
+
+                    function closeNav() {
+                        document.getElementById("mySidenav").style.width = "0";
+                    document.getElementById("main").style.marginLeft = "0";
+                    document.body.style.backgroundColor = "#f7eef7";
+        }
+        </script>
+</body>
+
+</html>
