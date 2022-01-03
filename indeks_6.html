@@ -3,16 +3,42 @@
 <head>
     <title>Cars</title>
     <link rel="icon" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <div class="baner">
         <img src="baner.png" alt="Cars" class="baner" style="width:100%; padding-bottom: 15px;">
     </div>
     <style>
         h1 {
             text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            font: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h3 {
+            margin-left: 10%;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        p {
+            text-align: center;
+            padding-inline-start: 15px;
+            font-size: 120%;
+            color: #a752a7;
+            font: bold;
+            margin-right: 10%;
+            margin-left: 10%;
+            font-family: 'Montserrat', sans-serif;
         }
 
         body {
-            font-family: "Lato", sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: #f7eef7;
         }
 
@@ -27,6 +53,7 @@
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .sidenav a {
@@ -36,10 +63,12 @@
             color: #d5aad5;
             display: block;
             transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .sidenav a:hover {
             color: #a752a7;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .sidenav .closebtn {
@@ -48,11 +77,13 @@
             right: 25px;
             font-size: 36px;
             margin-left: 50px;
+            font-family: 'Montserrat', sans-serif;
         }
 
         #main {
             transition: margin_left .5s;
             padding: 16px;
+            font-family: 'Montserrat', sans-serif;
         }
 
         @media screen and (max-height: 450px) {
@@ -84,7 +115,7 @@
         <h2>O Autorach</h2>
         <p>
             <br>
-            <img src="Nasze_zdjecie.png" alt="Nasze zdjecie" style="float: right" width="500">
+            <img src="Nasze_zdjecie.png" alt="Nasze zdjecie" style="float: right; margin-right: 0%;" width="500">
 
         </p>
         <h3><br><br>Amelia Lis&emsp;</h3>
@@ -94,8 +125,27 @@
             <br><br>
             Jesteśmy studentami pierwszego roku na Uniwersytecie ekonomicznym
             w Krakowie. Wszyscy wybralimy kierunek Informatyka Stosowana, ponieważ
-            chcemy rozwijać nasze umiejętności związane z tą dziedziną.
+            chcemy rozwijać nasze umiejętności związane z tą dziedziną.<br> Od wielu lat
+            jesteśmy fanatykami motoryzacji, także nad wyborem tematyki naszego projektu
+            nie musieliśmy się długo zastanawiać.<br><br><br><br>
 
+            <img src="Amelka_na_rajdzie.jpg" alt="Amelka_na_rajdzie" width="400">
+            <img src="Malwina_prowadzi_autobus.jfif" alt="Malwina_prowadzi_autobus" width="400">
+            <img src="Wiktor_za_kółkiem.JPG" alt="Wiktor_za_kółkiem" width="400">
+
+
+
+            <br><br>
+        </p>
+        <h2>O projekcie</h2>
+        <p>
+            Nasza strona internetowa opiera się na losowym generowaniu różnych informacji na temat samochodów i ich
+            odpowiednich właściwości.
+            Dzięki tej możliwości, stworzyliśmy bazę danych, która pozwoliła nam na opracowanie wykresów. Diagramy te
+            wykorzystują
+            REST API, czyli Representational State Transfer API (Application Programming Interface).
+            Za pomocą funkcji HTTP, mogliśmy uzyskać dostęp do serwera Mockaroo z najpotrzebniejszymi dla nas
+            informacjami.
         </p>
     </div>
 
