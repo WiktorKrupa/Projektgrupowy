@@ -1,0 +1,230 @@
+<html>
+
+<head>
+    <title>Cars</title>
+    <link rel="icon" href="icon.png">
+    <div class="baner">
+        <img src="baner.png" alt="Cars" class="baner" style="width:100%; padding-bottom: 15px;">
+    </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f7eef7;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #221122;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #d5aad5;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #a752a7;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin_left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="indeks_6.html">O nas i o projekcie</a>
+        <a href="https://my.api.mockaroo.com/auta.json?key=0d779220">Dane API</a>
+        <a href="indeks_5.html">Tabelka</a>
+        <a href="indeks_2.html">Wykres 1</a>
+        <a href="indeks_3.html">Wykres 2</a>
+        <a href="indeks_4.html">Wykres 3</a>
+        <a href="#">Wykres 4</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer;color:#a752a7" onclick="openNav()">&#9776; Kliknij tutaj</span>
+        <h1>Procent samochdów po wypadku</h1>
+        <p id="p1" style="text-align: center; padding-bottom: 25px;">
+            Wykres 4 przedstawia dane w formie procentowej ile samochodów miało wypadek.
+        </p>
+        <div class="main-page">
+            <center>
+                <div class="chart" style="height: 600px; width: 600px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </center>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="scripts/pieChart.js"></script>
+        <script>
+
+
+            let car_accident_array = [];
+
+            async function checkAccident() {
+                var apiUrl = "https://my.api.mockaroo.com/auta.json?key=0d779220";
+                return fetch(apiUrl).then(response => {
+                    return response.json();
+                }).then(jsondata => {
+                    console.log(jsondata)
+                    jsondata.map(item => {
+                        car_accident_array.push(item.car_accident)
+                    })
+                    console.log(car_accident_array, 999)
+
+                    let unique_accidents = []
+                    let acc_count = []
+
+                    car_accident_array.map(item1 => {
+                        if (!unique_accidents.includes(item1)) {
+                            unique_accidents.push(item1)
+
+                            count = 0
+                            car_accident_array.map(item2 => {
+
+                                if (item1 == item2) {
+                                    count += 1
+                                }
+                            })
+                            acc_count.push(count)
+                        }
+
+                    })
+
+
+                    console.log(unique_accidents, 998)
+                    console.log(acc_count, 999)
+
+                    var next = true;
+
+                    while (next) {
+                        var skip = true;
+                        for (var i = 0; i < acc_count.length; i++) {
+                            if (acc_count[i] < acc_count[i + 1]) {
+                                temp = acc_count[i]
+                                acc_count[i] = acc_count[i + 1]
+                                acc_count[i + 1] = temp
+
+                                temp = unique_accidents[i]
+                                unique_accidents[i] = unique_accidents[i + 1]
+                                unique_accidents[i + 1] = temp
+                                skip = false;
+                            }
+                        }
+
+                        if (skip) {
+                            next = false;
+                        }
+
+                    }
+
+                    console.log(acc_count, 998)
+                    console.log(unique_accidents, 998)
+
+                    const data = {
+                        labels: unique_accidents,
+                        datasets: [{
+                            label: 'Procent samochodów po wypadku',
+                            data: acc_count,
+                            backgroundColor: [
+                                ['#aca0bb'],
+                                ['SteelBlue'],
+                            ],
+                            borderColor: [
+                                ['#988ca6'],
+                                ['#3d75a4'],
+
+                            ],
+                            hoverBackgroundColor: [
+                                ['#988ca6'],
+                                ['#3d75a4'],
+                            ],
+                            hoverBorderColor: [
+                                ['#988ca6'],
+                                ['#3d75a4'],
+                            ],
+                            borderWidth: 2
+                        }]
+                    }
+
+                    const config3 = {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                            scales: {
+                            },
+                            cutout: 100
+
+                        }
+                    }
+
+                    const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), config3)
+
+                    return pieChart
+
+                }).catch(err => {
+                    // Do something for an error here
+                });
+            }
+
+            const pieChart = checkAccident()
+        </script>
+
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "#f7eef7";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "#f7eef7";
+        }
+    </script>
+</body>
+
+</html>

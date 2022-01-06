@@ -1,0 +1,173 @@
+<html>
+
+<head>
+    <title>Cars</title>
+    <link rel="icon" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <div class="baner">
+        <img src="baner.png" alt="Cars" class="baner" style="width:100%; padding-bottom: 15px;">
+    </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+        h1 {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            font: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h3 {
+            margin-left: 10%;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        p {
+            text-align: center;
+            padding-inline-start: 15px;
+            font-size: 120%;
+            color: #a752a7;
+            font: bold;
+            margin-right: 10%;
+            margin-left: 10%;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f7eef7;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #221122;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #d5aad5;
+            display: block;
+            transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .sidenav a:hover {
+            color: #a752a7;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #main {
+            transition: margin_left .5s;
+            padding: 16px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<!-- w style musi być dodana część main-->
+
+<body>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">O nas i o projekcie</a>
+        <a href="https://my.api.mockaroo.com/auta.json?key=0d779220">Dane API</a>
+        <a href="indeks_5.html">Tabelka</a>
+        <a href="indeks_2.html">Wykres 1</a>
+        <a href="indeks_3.html">Wykres 2</a>
+        <a href="indeks_4.html">Wykres 3</a>
+        <a href="indeks_7.html">Wykres 4</a>
+    </div>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer;color:#a752a7" onclick="openNav()">&#9776; Kliknij tutaj</span>
+        <h1>O Autorach</h1>
+        <p>
+            <br>
+            <img src="Nasze_zdjecie.png" alt="Nasze zdjecie" style="float: right; margin-right: 0%;" width="500">
+
+        </p>
+        <h3><br><br>Amelia Lis&emsp;</h3>
+        <h3>Malwina Kochman</h3>
+        <h3>Wiktor Krupa</h3>
+        <p>
+            <br><br>
+            Jesteśmy studentami pierwszego roku na Uniwersytecie ekonomicznym
+            w Krakowie. Wszyscy wybralimy kierunek Informatyka Stosowana, ponieważ
+            chcemy rozwijać nasze umiejętności związane z tą dziedziną.<br> Od wielu lat
+            jesteśmy fanatykami motoryzacji, także nad wyborem tematyki naszego projektu
+            nie musieliśmy się długo zastanawiać.<br><br><br><br>
+
+            <img class="zdj" src="Amelka_na_rajdzie.jpg" alt="Amelka_na_rajdzie" width="400">
+            <img class="zdj" src="Malwina_prowadzi_autobus.jfif" alt="Malwina_prowadzi_autobus" width="400">
+            <img class="zdj" src="Wiktor_za_kółkiem.JPG" alt="Wiktor_za_kółkiem" width="400">
+
+
+
+            <br><br>
+        </p>
+        <h2>O projekcie</h2>
+        <p>
+            Nasza strona internetowa opiera się na losowym generowaniu różnych informacji na temat samochodów i ich
+            odpowiednich właściwości.
+            Dzięki tej możliwości, stworzyliśmy bazę danych, która pozwoliła nam na opracowanie wykresów. Diagramy te
+            wykorzystują
+            REST API, czyli Representational State Transfer API (Application Programming Interface).
+            Za pomocą funkcji HTTP, mogliśmy uzyskać dostęp do serwera Mockaroo z najpotrzebniejszymi dla nas
+            informacjami.
+        </p>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            //dodane poniższe dwie linijki
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "#f7eef7";
+            //do tego momentu
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            //dodane poniższe dwie linijki
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "#f7eef7";
+            //do tego momentu
+        }
+    </script>
+</body>
+
+</html>
